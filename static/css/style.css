@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    background-color: #4CAF50;
+    color: white;
+    margin: 0;
+    padding: 20px;
+    text-align: center;  /* Menjaga agar judul secara keseluruhan berada di tengah */
+}
+
+.centered {
+    display: inline-block;  /* Agar hanya 'Gereja Ewanggelion' yang dipusatkan */
+    text-align: center;
+}
+
+.container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column; /* Menampilkan kotak secara vertikal */
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Jarak antar kotak */
+}
+
+.box {
+    width: 250px;
+    height: 250px;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.box h2 {
+    color: #4CAF50;
+    margin: 0;
+}
+
+.count {
+    font-size: 50px;
+    color: #333;
+    margin: 20px 0;
+}
+
+/* Tombol reset */
+.reset-btn {
+    padding: 10px 20px;          /* Menambah ruang di dalam tombol */
+    background-color: #dd2c2c;   /* Warna latar belakang tombol */
+    color: white;                /* Warna teks tombol */
+    border: none;                /* Menghapus border tombol */
+    border-radius: 5px;          /* Sudut tombol melengkung */
+    cursor: pointer;             /* Menambahkan kursor pointer saat hover */
+    font-size: 16px;              /* Ukuran font tombol */
+    margin-top: 20px;             /* Jarak atas tombol */
+    width: 250px;                  /* Lebar tombol menyesuaikan lebar kontainer */
+    height: 50px;                 /* Menentukan tinggi tombol */
+    box-sizing: border-box;      /* Agar padding dan border masuk dalam total ukuran tombol */
+}
+
+
+.reset-btn:hover {
+    background-color: #45a049;
+}

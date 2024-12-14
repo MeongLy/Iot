@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Orang Masuk dan Keluar</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Monitoring Orang Masuk dan Keluar</h1>
+    <div class="container">
+        <!-- Kotak Orang Masuk -->
+        <div class="box">
+            <h2>Orang Masuk</h2>
+            <h3 id="peopleIn" class="count">0</h3>
+        </div>
+
+        <!-- Kotak Orang Keluar -->
+        <div class="box">
+            <h2>Orang Keluar</h2>
+            <h3 id="peopleOut" class="count">0</h3>
+        </div>
+
+        <!-- Tombol Reset -->
+        <button id="resetButton" class="reset-btn">Reset</button>
+    </div>
+
+    <script>
+        // Inisialisasi SocketIO
+        const socket = io.connect('http://localhost:65432');
+
+        // Fungsi untuk mengambil data dari server
+        function fetchData() {
+            fetch('/data') // Endpoint server untuk data jumlah orang
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('peopleIn').innerText = data.in;
+                    document.getElementById('peopleOut').innerText = data.out;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Update data setiap 2 detik
+        setInterval(fetchData, 2000);
+
+        // Ambil data saat halaman pertama kali dibuka
+        fetchData();
+
+        document.getElementById('resetButton').addEventListener('click', function() {
+            // Kirimkan permintaan POST ke server untuk mereset data
+            fetch('/reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset angka di halaman setelah data berhasil direset
+                document.getElementById('peopleIn').innerText = '0';
+                document.getElementById('peopleOut').innerText = '0';
+            })
+            .catch(error => console.error('Error resetting data:', error));
+        });
+        
+        // Mendengarkan event dari server untuk pembaruan data real-time
+        socket.on('update_data', function(data) {
+            document.getElementById('peopleIn').innerText = data.in;
+            document.getElementById('peopleOut').innerText = data.out;
+        });
+        
+        
+    </script>
+
+    <!-- Tambahkan FontAwesome untuk ikon panah -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>
